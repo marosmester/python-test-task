@@ -33,15 +33,13 @@ python manage.py runserver
 ```
 
 ## API URL requests guide (examples)
-Using, for instance, https://www.postman.com/ it is possible to: \
+Using, for instance, https://www.postman.com/ it is possible to: 
 
 GET all posts: \
 http://127.0.0.1:8000/blogposts/ \
-POST a new post:
-http://127.0.0.1:8000/blogposts/
-GET/PUT/DELETE a single post with ID=2 :
-http://127.0.0.1:8000/blogposts/id/2
-GET a single post with userId=2 :
-http://127.0.0.1:8000/blogposts/userId/2
-
-
+POST a new post: \
+http://127.0.0.1:8000/blogposts/ \
+GET/PUT/DELETE a single post with ID=2 : \
+http://127.0.0.1:8000/blogposts/id/2 \
+GET a single post with userId=2 : \
+http://127.0.0.1:8000/blogposts/userId/2 \
