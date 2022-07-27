@@ -19,3 +19,10 @@ pip install django
 pip install djangorestframework
 pip install requests 
 ```
+## Step 2
+Start a new Django project and then create one Djangoo app. This can be done by:
+```bash
+django-admin startproject myproject
+cd myproject
+python manage.py startapp myapp
+```
