@@ -27,4 +27,19 @@ cd myproject
 python manage.py startapp myapp
 ```
 ### Step 3
-Provided that the project name and the app name are the same as in this repository, it is sufficient to just copy (and or replace) all the .py files from this repository. Alternatively, some dependencies, such the app name in 'setting.py' file should be edited.
+Provided that the project name and the app name are the same as in this repository, it is sufficient to just copy (and or replace) all the .py files from this repository. Alternatively, some dependencies, such as the app name in 'setting.py' file should be edited. Finally, run the server:
+```bash
+python manage.py runserver
+```
+
+## API URL requests guide (examples)
+GET all posts:
+http://127.0.0.1:8000/blogposts/
+POST a new post:
+http://127.0.0.1:8000/blogposts/
+GET/PUT/DELETE a single post with ID=2 :
+http://127.0.0.1:8000/blogposts/id/2
+GET a single post with userId=2 :
+http://127.0.0.1:8000/blogposts/id/2
+
+
