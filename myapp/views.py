@@ -52,7 +52,6 @@ def single_blogpost_by_ID(request, id, format = None):
             response = Response(serializer.data, status=status.HTTP_200_OK)
         else:
             # code for searching EXTERNAL API for a post with a given ID
-            pass
             '''
             -----------------------------CAUSES UNEXPECTED BEHAVIOUR--------------------------------------
             blogpost_dict = externalAPIs.find_post_byID('https://jsonplaceholder.typicode.com/posts', id)
@@ -66,6 +65,8 @@ def single_blogpost_by_ID(request, id, format = None):
                     serializer.save()
                     response = Response(serializer.data)
             '''
+            pass
+    
     #PUT METHOD
     elif VALID_BLOGPOST and request.method == 'PUT':
         serializer = BlogPostSerializer(blogpost, data= request.data)
