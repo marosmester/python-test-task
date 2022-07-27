@@ -53,7 +53,7 @@ def single_blogpost_by_ID(request, id, format = None):
         else:
             # code for searching EXTERNAL API for a post with a given ID
             '''
-            -----------------------------CAUSES UNEXPECTED BEHAVIOUR--------------------------------------
+            -----------------------------CAUSES UNEXPECTED BEHAVIOUR---------------------------------------
             blogpost_dict = externalAPIs.find_post_byID('https://jsonplaceholder.typicode.com/posts', id)
             # if blogpost was found by the 3rd party API:
             if blogpost_dict != None:                                    
