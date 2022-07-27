@@ -13,3 +13,9 @@ However, whenever you would request the API with something, you can add '.json' 
 
 ## First installation
 ### Step 1
+Create a virtual environment and activate it. After that, some Python packages are required, they can be installed via:
+```bash
+pip install django
+pip install djangorestframework
+pip install requests 
+```
