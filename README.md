@@ -12,4 +12,4 @@ The API can be tested using 3rd party services, for example, https://www.postman
 However, whenever you would request the API with something, you can add '.json' at the end of the URL request and a pure JSON output should be displayed in the browser.
 
 ## First installation
-
+### Step 1
