@@ -44,5 +44,5 @@ POST a new post: \
 http://127.0.0.1:8000/blogposts/ \
 GET/PUT/DELETE a single post with ID=2 : \
 http://127.0.0.1:8000/blogposts/id/2 \
-GET a single post with userId=2 : \
+GET all the posts with userId=2 : \
 http://127.0.0.1:8000/blogposts/userId/2
