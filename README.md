@@ -32,6 +32,9 @@ Provided that the project name and the app name are the same as in this reposito
 python manage.py runserver
 ```
 
+## Full API documentation (Swagger)
+https://app.swaggerhub.com/apis/MESTERMAROS/Python_test_task/1.0.0#/
+
 ## API URL requests guide (examples)
 Using, for instance, https://www.postman.com/ it is possible to: 
 
