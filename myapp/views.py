@@ -1,11 +1,13 @@
-#from django.shortcuts import render
+from django.shortcuts import render
 from .models import BlogPost
 from .serializers import BlogPostSerializer
-from myapp import externalAPIs
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+
+from myapp import externalAPIs
+from myapp import other
 
 @api_view(['GET', 'POST'])
 def all_blogposts(request, format=None):
@@ -14,14 +16,18 @@ def all_blogposts(request, format=None):
     if request.method == 'GET':
         # get all BlogPosts:
         all_blog_posts = BlogPost.objects.all()
-        print('all:', all_blog_posts)
         # serialize them:
         serializer = BlogPostSerializer(all_blog_posts, many = True)
         response = Response( serializer.data, status=status.HTTP_200_OK)
     
     #POST METHOD
     elif request.method == 'POST':
-        serializer = BlogPostSerializer(data=request.data)
+        # Choose a valid ID (in case it wasnt received): 
+        received = request.data
+        if 'id' not in received.keys():
+            received['id'] = other.choose_id()
+        
+        serializer = BlogPostSerializer(data=received)
         valid_userIDs = externalAPIs.get_all_ids('https://jsonplaceholder.typicode.com/users')
         request_ID = request.data['userId']
 
@@ -51,9 +57,6 @@ def single_blogpost_by_ID(request, id, format = None):
             serializer = BlogPostSerializer(blogpost)
             response = Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            # code for searching EXTERNAL API for a post with a given ID
-            '''
-            -----------------------------CAUSES UNEXPECTED BEHAVIOUR---------------------------------------
             blogpost_dict = externalAPIs.find_post_byID('https://jsonplaceholder.typicode.com/posts', id)
             # if blogpost was found by the 3rd party API:
             if blogpost_dict != None:                                    
@@ -64,17 +67,15 @@ def single_blogpost_by_ID(request, id, format = None):
                 if serializer.is_valid():
                     serializer.save()
                     response = Response(serializer.data)
-            '''
-            pass
     
     #PUT METHOD
     elif VALID_BLOGPOST and request.method == 'PUT':
         serializer = BlogPostSerializer(blogpost, data= request.data)
 
-        if serializer.is_valid() and ( request.data['userId'] == blogpost.userId) :
+        if serializer.is_valid() and ( request.data['userId'] == blogpost.userId) and (request.data['id'] == blogpost.id):
             serializer.save()
-            response = Response(serializer.data)
-        elif ( request.data['userId'] != blogpost.userId):
+            response = Response(serializer.data, status=status.HTTP_200_OK)
+        elif ( request.data['userId'] != blogpost.userId) or (request.data['id'] != blogpost.id):
             response = Response(serializer._errors, status=status.HTTP_403_FORBIDDEN)
         else:
             response = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -95,3 +96,7 @@ def search_blogposts_by_userId(request, userID, format = None):
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+# ------------------------------ FRONTEND ------------------------------------
+def home(request):
+    return render(request, 'index.html', {})

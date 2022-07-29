@@ -1,0 +1,295 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Test Task API",
+    "description": "This is a documentation for a RESTful API that can be found\n[here](https://github.com/marosmester/python-test-task.git). \n",
+    "contact": {
+      "email": "mestermaros@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/MESTERMAROS/Python_test_task/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "localhost:8000",
+      "description": "(Swagger does not work with on localhost)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "blogposts",
+      "description": "Everything needed to work with posts",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/marosmester/python-test-task"
+      }
+    }
+  ],
+  "paths": {
+    "/blogposts/": {
+      "get": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Views all posts",
+        "description": "View all posts in the system database",
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Uploades a new post",
+        "description": "Uploades a new post to the system",
+        "operationId": "postNewpost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Post was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "UserID not recongnised"
+          }
+        }
+      }
+    },
+    "/blogposts/id/{id}": {
+      "get": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Finds a post by ID",
+        "description": "Only one ID can be provided at a time",
+        "operationId": "getPostById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of a post to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid post ID"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Edits a post",
+        "description": "Edit the title or the body of a specific post",
+        "operationId": "putPostById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of a post to edit",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request"
+          },
+          "403": {
+            "description": "operation denied, userID was changed"
+          },
+          "404": {
+            "description": "Invalid post"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Deletes a post",
+        "operationId": "deletePost",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successfully deleted"
+          },
+          "404": {
+            "description": "Invalid post ID"
+          }
+        }
+      }
+    },
+    "/blogposts/userId/{userId}": {
+      "get": {
+        "tags": [
+          "blogposts"
+        ],
+        "summary": "Finds all posts with given userID",
+        "description": "All posts with given userID will be returned",
+        "operationId": "getPostsByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userID of a post to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid post userID"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "required": [
+          "body",
+          "title",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the post"
+          },
+          "body": {
+            "type": "string",
+            "description": "Post content"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
